@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Logics\Base\Interfaces\" />
-    <Folder Include="Models\Base\Interfaces\" />
-  </ItemGroup>
-
 </Project>
