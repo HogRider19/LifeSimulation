@@ -8,10 +8,13 @@ namespace Core.Models.Base.Interfaces
 {
     public interface ISimulationSpace
     {
-        int AddEntity(ISimulationEntity entity, int? id = null);
-        ISimulationEntity GetEntity(int id);
-        void RemoveEntity(ISimulationEntity entity);
-        void RemoveEntity(int id);
-        void Reset();
+        public int Width { get; }
+        public int Height { get; }
+
+        public int AddEntity(ISimulationEntity entity, int? id = null);
+        public ISimulationEntity GetEntity(int id);
+        public void RemoveEntity(ISimulationEntity entity);
+        public void RemoveEntity(int id);
+        public void Reset();
     }
 }

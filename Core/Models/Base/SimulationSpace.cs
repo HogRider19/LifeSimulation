@@ -5,7 +5,15 @@ namespace Core.Models.Base
     public class SimulationSpace : ISimulationSpace
     {
         public Dictionary<int, ISimulationEntity> Entities { get; private set; } = new();
+        public int Width { get; init; }
+        public int Height { get; init; }
 
+        public SimulationSpace(int width = 100, int height = 100)
+        {
+            Width = 100;
+            Height = 100;
+        }
+        
         public int AddEntity(ISimulationEntity entity, int? id = null)
         {
             if (id == null) 

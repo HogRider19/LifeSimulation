@@ -39,8 +39,25 @@ namespace Core.Logics.Base
 
                 foreach (var rule in _rules)
                 {
-                    if (rule.Type == ESimulationRuleType.EveryCycle)
-                        rule.Apply(_space, SimulationState);
+                    try
+                    {
+                        if (rule.Type == ESimulationRuleType.EveryCycle)
+                            rule.Apply(_space, SimulationState);
+
+                        if (rule.Type == ESimulationRuleType.ByCondition)
+                        {
+                            if (rule is IConditionSimulationRule conditionRule)
+                            {
+                                if (conditionRule.ReadyForApply(SimulationState))
+                                    conditionRule.Apply(_space, SimulationState);
+                            }
+                            
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        // ignored
+                    }
                 }
             }
 
