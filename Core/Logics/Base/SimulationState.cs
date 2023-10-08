@@ -36,5 +36,10 @@ namespace Core.Logics.Base
             if (_state.TryGetValue(rule, out var ruleContext))
                 ruleContext.Clear();
         }
+
+        public void ClearAll()
+        {
+            _state = new Dictionary<ISimulationRule, Dictionary<string, object>>();
+        }
     }    
 }

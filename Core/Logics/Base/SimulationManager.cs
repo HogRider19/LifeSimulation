@@ -54,10 +54,7 @@ namespace Core.Logics.Base
                             
                         }
                     }
-                    catch (Exception exc)
-                    {
-                        // ignored
-                    }
+                    catch (Exception exc) { /* ignored */ }
                 }
             }
 

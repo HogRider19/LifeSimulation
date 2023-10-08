@@ -6,5 +6,6 @@ namespace Core.Logics.Base.Interfaces
     {
         public Dictionary<string, object> GetRuleContext(ISimulationRule rule);
         public void Clear(ISimulationRule rule);
+        public void ClearAll();
     }
 };
