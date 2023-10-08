@@ -4,7 +4,7 @@ namespace Core.Models.Base
 {
     public class SimulationSpace : ISimulationSpace
     {
-        public Dictionary<int, ISimulationEntity> Entitis { get; private set; } = new();
+        public Dictionary<int, ISimulationEntity> Entities { get; private set; } = new();
 
         public int AddEntity(ISimulationEntity entity, int? id = null)
         {
@@ -14,26 +14,26 @@ namespace Core.Models.Base
                 {
                     id = new Random().Next();
                 }
-                while (!Entitis.ContainsKey((int)id));
+                while (!Entities.ContainsKey((int)id));
             }
 
-            Entitis.Add((int)id, entity);
+            Entities.Add((int)id, entity);
             return (int)id;
         }
 
         public ISimulationEntity GetEntity(int id)
         {
-            return Entitis[id];
+            return Entities[id];
         }
 
         public void RemoveEntity(ISimulationEntity entity)
         {
-            Entitis.Remove(Entitis.First(c => c.Value == entity).Key);
+            Entities.Remove(Entities.First(c => c.Value == entity).Key);
         }
 
         public void RemoveEntity(int id)
         {
-            Entitis.Remove(id);
+            Entities.Remove(id);
         }
     }
 }

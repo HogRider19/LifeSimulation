@@ -8,6 +8,6 @@ namespace Core.Logics.Base.Interfaces
 {
     public interface IConditionSimulationRule : ISimulationRule
     {
-        public bool ReadyForApply();
+        public bool ReadyForApply(ISimulationState state);
     }
 }
