@@ -6,16 +6,16 @@ namespace Core.Logics.Base
 {
     public abstract class SimulationRule : ISimulationRule, IConditionSimulationRule
     {
-        public SimulationRuleType Type { get; init; }
+        public ESimulationRuleType Type { get; init; }
 
-        public SimulationRule(SimulationRuleType type = SimulationRuleType.EveryCycle)
+        public SimulationRule(ESimulationRuleType type = ESimulationRuleType.EveryCycle)
         {
             Type = type;
         }
         
         public virtual bool ReadyForApply(ISimulationState state)
         {
-            if (Type != SimulationRuleType.ByCondition)
+            if (Type != ESimulationRuleType.ByCondition)
                 return true;
             
             throw new NotImplementedException();
@@ -24,5 +24,5 @@ namespace Core.Logics.Base
         public abstract bool Apply(ISimulationSpace space, ISimulationState state);
     }
 
-    public enum SimulationRuleType { OnlyStart, EveryCycle, ByCondition };
+    public enum ESimulationRuleType { OnlyStart, EveryCycle, ByCondition };
 }

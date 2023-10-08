@@ -12,5 +12,6 @@ namespace Core.Models.Base.Interfaces
         ISimulationEntity GetEntity(int id);
         void RemoveEntity(ISimulationEntity entity);
         void RemoveEntity(int id);
+        void Reset();
     }
 }

@@ -9,7 +9,7 @@ namespace Core.Logics.Base
         private int _interval;
         private long _previousTime;
 
-        public ByTimeSimulationRule(int interval) : base(SimulationRuleType.ByCondition)
+        public ByTimeSimulationRule(int interval) : base(ESimulationRuleType.ByCondition)
         {
             _previousTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             _interval = interval;

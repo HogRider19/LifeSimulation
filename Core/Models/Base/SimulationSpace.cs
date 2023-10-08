@@ -35,5 +35,10 @@ namespace Core.Models.Base
         {
             Entities.Remove(id);
         }
+
+        public void Reset()
+        {
+            Entities = new Dictionary<int, ISimulationEntity>();
+        }
     }
 }
