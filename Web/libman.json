@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "@microsoft/signalr@7.0.11",
+      "destination": "wwwroot/lib/signalr/",
+      "files": [
+        "dist/webworker/signalr.min.js"
+      ]
+    }
+  ]
+}

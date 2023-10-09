@@ -46,7 +46,7 @@ connection.on("ReceiveSpace", function (map) {
             const y = (j - anchorPointY) * cellSize + cellSize;
             const value = data[i][j];
 
-            if (value == 0)
+            if (value === 0)
                 continue;
 
             var color = ENTITYCOLORS[value];
