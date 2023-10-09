@@ -14,4 +14,10 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="8.0.0-rc.1.23421.29" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Simulation\Error.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Simulation\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Simulation\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
+
 </Project>

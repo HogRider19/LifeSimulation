@@ -16,18 +16,21 @@ namespace Web.Controllers
             _worker = worker;
         }
 
+        [Route("start")]
         public ActionResult Start()
         {
             _worker.Start();
             return Ok();
         }
 
+        [Route("stop")]
         public ActionResult Stop()
         {
             _worker.Stop();
             return Ok();
         }
-
+    
+        [Route("pause")]
         public ActionResult SwitchPause()
         {
             _worker.SwitchPause();
