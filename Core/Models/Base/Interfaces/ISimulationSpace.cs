@@ -16,5 +16,7 @@ namespace Core.Models.Base.Interfaces
         public void RemoveEntity(ISimulationEntity entity);
         public void RemoveEntity(int id);
         public void Reset();
+
+        public IEnumerable<ISimulationEntity> GetEntities();
     }
 }

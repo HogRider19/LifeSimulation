@@ -16,21 +16,21 @@ namespace Web.Controllers
             _worker = worker;
         }
 
-        [Route("start")]
+        [HttpPost("start")]
         public ActionResult Start()
         {
             _worker.Start();
             return Ok();
         }
 
-        [Route("stop")]
+        [HttpPost("stop")]
         public ActionResult Stop()
         {
             _worker.Stop();
             return Ok();
         }
     
-        [Route("pause")]
+        [HttpPost("pause")]
         public ActionResult SwitchPause()
         {
             _worker.SwitchPause();

@@ -8,7 +8,7 @@ const ENTITYCOLORS = {
     4: "yellow",
 };
 
-const SENSITIVITY = 4;
+const SENSITIVITY = 1;
 
 var anchorPointX = 0;
 var anchorPointY = 0;
@@ -112,7 +112,7 @@ document.getElementById('map-canvas').addEventListener('mouseout', () => isPessP
 ///
 
 document.getElementById("start-button").addEventListener('click', async () => {
-    let response = await fetch('/simulation/run', {
+    let response = await fetch('/simulation/start', {
         method: 'POST',
         headers: {'Content-Type': 'application/json;charset=utf-8'},
     });
@@ -150,7 +150,7 @@ connection.on("SendSimulationInfo", function (jsonInfo) {
     document.getElementById("restart-count").innerText = 'Restart:   ' + info.RestartingCount;
 });
 
-document.getElementById("config-button").addEventListener("click", async (event) => {
+/*document.getElementById("config-button").addEventListener("click", async (event) => {
     var mealPerinterval = document.getElementById("meal-per-interval").value;
     var hpForStep = document.getElementById("hp-for-step").value;
 
@@ -171,4 +171,4 @@ class Config {
         this.MealPerInterval = MealPerinterval;
         this.HpForStep = HpForStep;
     }
-}
+}*/

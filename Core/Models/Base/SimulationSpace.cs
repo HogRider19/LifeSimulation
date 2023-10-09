@@ -48,5 +48,7 @@ namespace Core.Models.Base
         {
             Entities = new Dictionary<int, ISimulationEntity>();
         }
+
+        public IEnumerable<ISimulationEntity> GetEntities() => Entities.Values;
     }
 }

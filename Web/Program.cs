@@ -1,4 +1,5 @@
 using Web.Services;
+using Web.Services.Hubs;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
 builder.Services.AddSingleton<SimulationWorker>();
+builder.Services.AddSingleton<SpaceInfoHandler>();
 
 var app = builder.Build();
 
@@ -25,6 +27,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapHub<ApplicationHub>("/Hub");
 
 app.MapControllerRoute(
     name: "default",
