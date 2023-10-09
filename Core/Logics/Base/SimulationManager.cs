@@ -76,10 +76,11 @@ namespace Core.Logics.Base
             ManagerState = ESimulationManagerState.Started;
             return false;
         }
-
+        
         public void Stop() => ManagerState = ESimulationManagerState.Stopped;
         public void AddRule(ISimulationRule rule) => _rules.Add(rule);
         public void AddRule(IEnumerable<ISimulationRule> rules) => _rules.AddRange(rules);
+        public void WaitStop() { while (ManagerState != ESimulationManagerState.NotStarted) { } }
     }
 
     public enum ESimulationManagerState { Started, NotStarted, Stopped, Waiting }

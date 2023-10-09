@@ -9,11 +9,28 @@ namespace Web.Services
     {
         private readonly ILogger<SimulationWorker> _logger;
         private SimulationManager _manager;
+        private Task? _managerTask;
         
         public SimulationWorker(ILogger<SimulationWorker> logger)
         {
             _logger = logger;
             _manager = CreateBaseManager();
+        }
+
+        public void Start()
+        {
+            if (_managerTask != null)
+                Stop();
+
+            _manager = CreateBaseManager();
+            _managerTask = Task.Run(() => _manager.Start());
+        }
+
+        public void Stop()
+        {
+            _manager.Stop();
+            _manager.WaitStop();
+            _managerTask = null;
         }
 
         protected SimulationManager CreateBaseManager()
@@ -28,5 +45,7 @@ namespace Web.Services
 
             return manager;
         }
+        
+        public bool SwitchPause() => _manager.SwitchPause();
     }   
 }
