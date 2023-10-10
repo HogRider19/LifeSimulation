@@ -62,7 +62,8 @@ namespace Web.Services
 
             return manager;
         }
-        
+
+        public SimulationMetaInfo GetMetaInfo() => _manager.GetMetaInfo();
         public bool SwitchPause() => _manager.SwitchPause();
     }   
 }

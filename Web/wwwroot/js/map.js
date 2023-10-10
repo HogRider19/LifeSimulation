@@ -4,8 +4,8 @@ const ENTITYCOLORS = {
     0: "red",
     1: "green",
     2: "blue",
-    3: "brown",
-    4: "yellow",
+    3: "yellow",
+    4: "brown",
 };
 
 const SENSITIVITY = 1;
@@ -13,6 +13,7 @@ const SENSITIVITY = 1;
 var anchorPointX = 0;
 var anchorPointY = 0;
 var cameraResolution = null;
+var spaceSize = 100;
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/Hub").build();
 
@@ -23,37 +24,33 @@ connection.on("ReceiveSpace", function (map) {
 
     const data = JSON.parse(map);
     
-    console.log(data);
-
-    /*
-    cameraResolution = cameraResolution == null ? data.length : cameraResolution;
+    
+    cameraResolution = cameraResolution == null ? spaceSize : cameraResolution;
     cameraResolution = cameraResolution < 10 ? 10 : cameraResolution;
-    cameraResolution = cameraResolution > data.length ? data.length : cameraResolution;
+    cameraResolution = cameraResolution > spaceSize ? spaceSize : cameraResolution;
 
     anchorPointX = anchorPointX < 0 ? 0 : anchorPointX;
     anchorPointY = anchorPointY < 0 ? 0 : anchorPointY;
 
-    anchorPointX = anchorPointX >= data.length - cameraResolution ? data.length - cameraResolution : anchorPointX;
-    anchorPointY = anchorPointY >= data.length - cameraResolution ? data.length - cameraResolution : anchorPointY;
+    anchorPointX = anchorPointX >= spaceSize - cameraResolution ? spaceSize - cameraResolution : anchorPointX;
+    anchorPointY = anchorPointY >= spaceSize - cameraResolution ? spaceSize - cameraResolution : anchorPointY;
     
-
     const cellSize = canvas.width / cameraResolution;
-    */
     
     context.clearRect(0, 0, canvas.width, canvas.height);
     
-    ///
-    const spaceSize = 100;
-    ///
-    
     for(let entityIndex = 0; entityIndex < data.length; entityIndex++)
     {
-        const x = data[entityIndex][0] * canvas.width / spaceSize;
-        const y = data[entityIndex][1] * canvas.height / spaceSize;
-        const color = ENTITYCOLORS[data[entityIndex][2]];
+        //const x = data[entityIndex].X * canvas.width / spaceSize;
+        //const y = data[entityIndex].Y * canvas.height / spaceSize;
+        const x = data[entityIndex].X * canvas.width  / spaceSize;
+        const y = data[entityIndex].Y * canvas.height / spaceSize;
+        const color = ENTITYCOLORS[data[entityIndex].Type];
+
+        console.log("anchorPointX: " +  data[entityIndex].X + " anchorPointY: " + spaceSize)
 
         context.beginPath();
-        context.arc(x, y, 5, 0, 2 * Math.PI)
+        context.arc(x, y, 3, 0, 2 * Math.PI)
         context.fillStyle = color;
         context.fill();
     }
@@ -139,7 +136,11 @@ document.getElementById("start-button").addEventListener('click', async () => {
     if (!response.ok)
         console.error("Simulation start error");
     else
-        console.log("Simulation running");
+    {
+        let info = await response.json();
+        spaceSize = info.SpaceWidth;
+        console.log("Simulation running! SpaceSize: " + spaceSize);   
+    }
 });
 
 document.getElementById("stop-button").addEventListener('click', async () => {

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Logics.Base;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Web.Services;
 
 namespace Web.Controllers
@@ -20,7 +22,7 @@ namespace Web.Controllers
         public ActionResult Start()
         {
             _worker.Start();
-            return Ok();
+            return Ok(JsonConvert.SerializeObject(_worker.GetMetaInfo()));
         }
 
         [HttpPost("stop")]

@@ -15,5 +15,5 @@ namespace Core.Models
         }
     }
 
-    public enum EPointType { Red, Green, Blue }
+    public enum EPointType { Red = 0, Green = 1, Blue = 2 }
 }

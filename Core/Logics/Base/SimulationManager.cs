@@ -28,7 +28,7 @@ namespace Core.Logics.Base
             if (ManagerState != ESimulationManagerState.NotStarted) return;
             if (resetSpase) _space.Reset();
 
-            var onlyStartRules = _rules.Where(r => r.Type == ESimulationRuleType.OnlyStart);
+            var onlyStartRules = _rules.Where(r => r.Type == ESimulationRuleType.OnlyStart).ToList();
             _rules.RemoveAll(r => onlyStartRules.Contains(r));
             foreach (var onlyStartRule in onlyStartRules)
                 onlyStartRule.Apply(_space, SimulationState);
@@ -76,7 +76,16 @@ namespace Core.Logics.Base
             ManagerState = ESimulationManagerState.Started;
             return false;
         }
-        
+
+        public SimulationMetaInfo GetMetaInfo()
+        {
+            return new SimulationMetaInfo()
+            {
+                SpaceWidth = _space.Width,
+                SpaceHeight = _space.Height
+            };
+        }
+
         public void Stop() => ManagerState = ESimulationManagerState.Stopped;
         public void AddRule(ISimulationRule rule) => _rules.Add(rule);
         public void AddRule(IEnumerable<ISimulationRule> rules) => _rules.AddRange(rules);
@@ -84,4 +93,10 @@ namespace Core.Logics.Base
     }
 
     public enum ESimulationManagerState { Started, NotStarted, Stopped, Waiting }
+
+    public struct SimulationMetaInfo
+    {
+        public int SpaceWidth { get; set; }
+        public int SpaceHeight { get; set; }
+    }
 }

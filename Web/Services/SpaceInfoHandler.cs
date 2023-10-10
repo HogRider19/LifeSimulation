@@ -15,27 +15,34 @@ namespace Web.Services
 
         public string GetJsonRepresentation(ISimulationSpace space) 
         {
-            var data = new List<List<double>>();
+            var data = new List<EntityInfo>();
             foreach (var entity in space.GetEntities())
             {
-                var entityList = new List<double>();
-                entityList.Add(entity.Position.X);
-                entityList.Add(entity.Position.Y);
+                var entityInfo = new EntityInfo();
+                entityInfo.X = (float)entity.Position.X;
+                entityInfo.Y = (float)entity.Position.Y;
                 
                 if (entity.GetType() == typeof(Meal))
-                    entityList.Add(3);
+                    entityInfo.Type = 3;
                 else if (entity.GetType() == typeof(Point))
                 {
                     var point = (Point)entity;
-                    entityList.Add((int)point.Type.GetTypeCode());
+                    entityInfo.Type = Convert.ToInt32(point.Type);
                 }
                 else
                     throw new ArgumentException("Undefined entity type");
                 
-                data.Add(entityList);
+                data.Add(entityInfo);
             }
             
             return JsonConvert.SerializeObject(data);
         }
+    }
+
+    file struct EntityInfo
+    {
+        public float X { get; set; }
+        public float Y { get; set; }
+        public int Type { get; set; }
     }
 }
