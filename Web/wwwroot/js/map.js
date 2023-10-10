@@ -22,8 +22,10 @@ connection.on("ReceiveSpace", function (map) {
     const context = canvas.getContext('2d');
 
     const data = JSON.parse(map);
+    
+    console.log(data);
 
-    ///
+    /*
     cameraResolution = cameraResolution == null ? data.length : cameraResolution;
     cameraResolution = cameraResolution < 10 ? 10 : cameraResolution;
     cameraResolution = cameraResolution > data.length ? data.length : cameraResolution;
@@ -33,13 +35,30 @@ connection.on("ReceiveSpace", function (map) {
 
     anchorPointX = anchorPointX >= data.length - cameraResolution ? data.length - cameraResolution : anchorPointX;
     anchorPointY = anchorPointY >= data.length - cameraResolution ? data.length - cameraResolution : anchorPointY;
-
-    ///
+    
 
     const cellSize = canvas.width / cameraResolution;
-
+    */
+    
     context.clearRect(0, 0, canvas.width, canvas.height);
+    
+    ///
+    const spaceSize = 100;
+    ///
+    
+    for(let entityIndex = 0; entityIndex < data.length; entityIndex++)
+    {
+        const x = data[entityIndex][0] * canvas.width / spaceSize;
+        const y = data[entityIndex][1] * canvas.height / spaceSize;
+        const color = ENTITYCOLORS[data[entityIndex][2]];
 
+        context.beginPath();
+        context.arc(x, y, 5, 0, 2 * Math.PI)
+        context.fillStyle = color;
+        context.fill();
+    }
+    
+    /*
     for (let i = anchorPointX; i < anchorPointX + cameraResolution; i++) {
         for (let j = anchorPointY; j < anchorPointY + cameraResolution; j++) {
             const x = (i - anchorPointX) * cellSize + cellSize;
@@ -57,6 +76,7 @@ connection.on("ReceiveSpace", function (map) {
             context.fill();
         }
     }
+    */
 });
 
 connection.start().then(function () {}).catch(function (err) {

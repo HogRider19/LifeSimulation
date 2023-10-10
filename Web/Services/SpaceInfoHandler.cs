@@ -6,6 +6,13 @@ namespace Web.Services
 {
     public class SpaceInfoHandler
     {
+        private readonly ILogger<SpaceInfoHandler> _logger;
+
+        public SpaceInfoHandler(ILogger<SpaceInfoHandler> logger)
+        {
+            _logger = logger;
+        }
+
         public string GetJsonRepresentation(ISimulationSpace space) 
         {
             var data = new List<List<double>>();

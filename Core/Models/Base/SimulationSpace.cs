@@ -22,7 +22,7 @@ namespace Core.Models.Base
                 {
                     id = new Random().Next();
                 }
-                while (!Entities.ContainsKey((int)id));
+                while (Entities.ContainsKey((int)id));
             }
 
             Entities.Add((int)id, entity);
