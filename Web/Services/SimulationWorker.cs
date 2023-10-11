@@ -59,6 +59,7 @@ namespace Web.Services
             manager.AddRule(new EntityStartSpawnRule(30));
             manager.AddRule(new MealSpawnRule(1000, 10));
             manager.AddRule(new ReceivingSpaceRule(10, ReceivingSpaceHandler));
+            manager.AddRule(new ClosedBordersRule());
 
             return manager;
         }
