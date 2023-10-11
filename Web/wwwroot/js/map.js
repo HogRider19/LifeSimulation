@@ -9,6 +9,7 @@ const ENTITYCOLORS = {
 };
 
 const SENSITIVITY = 1;
+const BASEPOINTSIZE = 2;
 
 var anchorPointX = 0;
 var anchorPointY = 0;
@@ -23,7 +24,6 @@ connection.on("ReceiveSpace", function (map) {
     const context = canvas.getContext('2d');
 
     const data = JSON.parse(map);
-    
     
     cameraResolution = cameraResolution == null ? spaceSize : cameraResolution;
     cameraResolution = cameraResolution < 10 ? 10 : cameraResolution;
@@ -41,39 +41,16 @@ connection.on("ReceiveSpace", function (map) {
     
     for(let entityIndex = 0; entityIndex < data.length; entityIndex++)
     {
-        //const x = data[entityIndex].X * canvas.width / spaceSize;
-        //const y = data[entityIndex].Y * canvas.height / spaceSize;
-        const x = data[entityIndex].X * canvas.width  / spaceSize;
-        const y = data[entityIndex].Y * canvas.height / spaceSize;
+        const x = (data[entityIndex].X - anchorPointX) * canvas.width / cameraResolution;
+        const y = (data[entityIndex].Y - anchorPointY) * canvas.height / cameraResolution;
+        const pointSize = BASEPOINTSIZE * (spaceSize / cameraResolution);
         const color = ENTITYCOLORS[data[entityIndex].Type];
 
-        console.log("anchorPointX: " +  data[entityIndex].X + " anchorPointY: " + spaceSize)
-
         context.beginPath();
-        context.arc(x, y, 3, 0, 2 * Math.PI)
+        context.arc(x, y, pointSize, 0, 2 * Math.PI)
         context.fillStyle = color;
         context.fill();
     }
-    
-    /*
-    for (let i = anchorPointX; i < anchorPointX + cameraResolution; i++) {
-        for (let j = anchorPointY; j < anchorPointY + cameraResolution; j++) {
-            const x = (i - anchorPointX) * cellSize + cellSize;
-            const y = (j - anchorPointY) * cellSize + cellSize;
-            const value = data[i][j];
-
-            if (value === 0)
-                continue;
-
-            var color = ENTITYCOLORS[value];
-
-            context.beginPath();
-            context.arc(x, y, cellSize / 2, 0, 2 * Math.PI)
-            context.fillStyle = color;
-            context.fill();
-        }
-    }
-    */
 });
 
 connection.start().then(function () {}).catch(function (err) {
