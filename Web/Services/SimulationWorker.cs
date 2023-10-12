@@ -61,6 +61,11 @@ namespace Web.Services
             manager.AddRule(new ReceivingSpaceRule(10, ReceivingSpaceHandler));
             manager.AddRule(new ClosedBordersRule());
 
+            var movePointRule = new MovePointRule();
+            var findTargetRule = new FindTargetRule(2000, movePointRule);
+            manager.AddRule(findTargetRule);
+            manager.AddRule(movePointRule);
+
             return manager;
         }
 

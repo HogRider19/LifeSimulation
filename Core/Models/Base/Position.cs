@@ -13,6 +13,11 @@ namespace Core.Models.Base
             Y = y;
         }
 
+        public double GetDist(Position position)
+        {
+            return Math.Sqrt(Math.Pow(X - position.X, 2) + Math.Pow(Y - position.Y, 2));
+        }
+
         public static Position CreateRandom(double a, double b)
         {
             var rnd = new Random();
