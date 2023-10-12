@@ -1,6 +1,7 @@
 ﻿using Core.Logics.Base;
 using Core.Logics.Base.Interfaces;
 using Core.Models;
+using Core.Models.Base;
 using Core.Models.Base.Interfaces;
 
 namespace Core.Logics
@@ -8,6 +9,7 @@ namespace Core.Logics
     public class MovePointRule : SimulationRule
     {
         private const int MoveInterval = 100;
+        private const double EatingDistance = 1.0;
         
         public MovePointRule() : base(ESimulationRuleType.EveryCycle) { }
         
@@ -27,10 +29,21 @@ namespace Core.Logics
                 {
                     var targetPosition = targets[point].Position;
                     var pointPosition = point.Position;
-                    point.Direction = Math.Atan2(
-                        targetPosition.Y - pointPosition.Y,
-                        targetPosition.X - pointPosition.X
-                    );
+
+                    if (pointPosition.GetDist(targetPosition) < EatingDistance)
+                    {
+                        var target = targets[point];
+                        point.Hp += target.Hp / 2;
+                        ((SimulationEntity)target).Hp = -10;
+                        targets.Remove(entity);
+                    }
+                    else
+                    {
+                        point.Direction = Math.Atan2(
+                            targetPosition.Y - pointPosition.Y,
+                            targetPosition.X - pointPosition.X
+                        );   
+                    }
                 }
                 else
                 {

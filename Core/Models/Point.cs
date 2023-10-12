@@ -6,7 +6,7 @@ namespace Core.Models
     {
         public EPointType Type { get; protected set; }
         public double Velocity { get; set; }
-
+        public double VisibilityRange { get; set; }
 
         public Point(
             Position position,
@@ -16,6 +16,7 @@ namespace Core.Models
             Type = type;
             Hp = 1000;
             Velocity = 2;
+            VisibilityRange = 10;
         }
     }
 

@@ -60,6 +60,7 @@ namespace Web.Services
             manager.AddRule(new MealSpawnRule(1000, 10));
             manager.AddRule(new ReceivingSpaceRule(10, ReceivingSpaceHandler));
             manager.AddRule(new ClosedBordersRule());
+            manager.AddRule(new HpHandlerRule(1000));
 
             var movePointRule = new MovePointRule();
             var findTargetRule = new FindTargetRule(2000, movePointRule);

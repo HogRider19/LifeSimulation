@@ -56,14 +56,16 @@ namespace Core.Logics
             ISimulationEntity entity,
             IEnumerable<ISimulationEntity> spaceEntities)
         {
-            var intendedTargets = spaceEntities.Where(e => IsTargetPair(entity, e));
-
+            var intendedTargets = spaceEntities.Where(e => IsTargetPair(entity, e)).ToList();
+            if (intendedTargets.Count() == 0) return null;
+            var visibilityRange = ((Point)entity).VisibilityRange;
+            
             ISimulationEntity? target = null;
             var minDist = double.MaxValue;
             foreach (var variableIntendedTarget in intendedTargets)
             {
                 var dist = entity.Position.GetDist(variableIntendedTarget.Position);
-                if (dist < minDist)
+                if (dist < minDist && dist < visibilityRange)
                 {
                     minDist = dist;
                     target = variableIntendedTarget;
@@ -75,6 +77,9 @@ namespace Core.Logics
 
         protected static bool IsTargetPair(ISimulationEntity e1, ISimulationEntity e2)
         {
+            if (e2.Hp <= 0)
+                return false;
+            
             if (e1 is Point point1)
             {
                 if (point1.Type == EPointType.Red)
