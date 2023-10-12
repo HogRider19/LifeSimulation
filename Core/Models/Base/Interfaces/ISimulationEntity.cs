@@ -10,9 +10,11 @@ namespace Core.Models.Base.Interfaces
     {
         Position Position { get; }
         double Direction { get; }
+        public int Hp { get; }
 
         void Rotate(double angle);
         void Move(Position position);
         void MoveTo(Position position);
+        void MoveToDirection(double dist);
     }
 }

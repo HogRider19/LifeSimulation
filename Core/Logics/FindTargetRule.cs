@@ -18,8 +18,6 @@ namespace Core.Logics
 
         public override bool Apply(ISimulationSpace space, ISimulationState state)
         {
-            Console.WriteLine("Start");
-            
             var context = state.GetRuleContext(_contextRule);
             var internalContext = state.GetRuleContext(this);
             
@@ -36,8 +34,6 @@ namespace Core.Logics
             RemoveByCondition(targetsTime, p => !entities.Contains(p.Key));
             RemoveByCondition(targets, p => !entities.Contains(p.Key) || !entities.Contains(p.Value));
             
-            Console.WriteLine("Start111");
-            
             foreach (var entity in entities)
             {
                 var currentUnixTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
@@ -49,7 +45,7 @@ namespace Core.Logics
 
                     var target = GetNearlyTargetEntity(entity, entities);
                     if (target != null)
-                        targets.Add(entity, target);
+                        targets[entity] = target;
                 }
             }
             

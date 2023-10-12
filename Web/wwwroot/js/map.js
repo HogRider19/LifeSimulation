@@ -25,6 +25,8 @@ connection.on("ReceiveSpace", function (map) {
 
     const data = JSON.parse(map);
     
+    console.log(data);
+    
     cameraResolution = cameraResolution == null ? spaceSize : cameraResolution;
     cameraResolution = cameraResolution < 10 ? 10 : cameraResolution;
     cameraResolution = cameraResolution > spaceSize ? spaceSize : cameraResolution;

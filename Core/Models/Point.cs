@@ -5,13 +5,17 @@ namespace Core.Models
     public class Point : SimulationEntity 
     {
         public EPointType Type { get; protected set; }
+        public double Velocity { get; set; }
+
 
         public Point(
             Position position,
             double direction,
-            EPointType type = EPointType.Green) : base(position, direction)
+            EPointType type = EPointType.Red) : base(position, direction)
         {
             Type = type;
+            Hp = 1000;
+            Velocity = 2;
         }
     }
 
