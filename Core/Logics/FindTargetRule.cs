@@ -18,11 +18,13 @@ namespace Core.Logics
 
         public override bool Apply(ISimulationSpace space, ISimulationState state)
         {
+            Console.WriteLine("Start");
+            
             var context = state.GetRuleContext(_contextRule);
             var internalContext = state.GetRuleContext(this);
             
             if (!internalContext.ContainsKey("targetsTime"))
-                context.Add("targetsTime", new Dictionary<ISimulationEntity, long>());
+                internalContext.Add("targetsTime", new Dictionary<ISimulationEntity, long>());
             
             if (!context.ContainsKey("targets"))
                 context.Add("targets", new Dictionary<ISimulationEntity, ISimulationEntity>());
@@ -33,6 +35,8 @@ namespace Core.Logics
             
             RemoveByCondition(targetsTime, p => !entities.Contains(p.Key));
             RemoveByCondition(targets, p => !entities.Contains(p.Key) || !entities.Contains(p.Value));
+            
+            Console.WriteLine("Start111");
             
             foreach (var entity in entities)
             {

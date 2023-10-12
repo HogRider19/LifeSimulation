@@ -51,10 +51,14 @@ namespace Core.Logics.Base
                                 if (conditionRule.ReadyForApply(SimulationState))
                                     conditionRule.Apply(_space, SimulationState);
                             }
-                            
+
                         }
                     }
-                    catch (Exception exc) { /* ignored */ }
+                    catch (Exception exc)
+                    {
+                        /* ignored */
+                        Console.WriteLine(exc + Environment.NewLine);
+                    }
                 }
             }
 

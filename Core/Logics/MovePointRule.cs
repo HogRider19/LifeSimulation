@@ -11,7 +11,7 @@ namespace Core.Logics
         public override bool Apply(ISimulationSpace space, ISimulationState state)
         {
             var context = state.GetRuleContext(this);
-            var targets = (Dictionary<ISimulationEntity, ISimulationEntity>?)context["targets"];
+            var targets = (Dictionary<ISimulationEntity, ISimulationEntity>?)context.GetValueOrDefault("targets");
 
             if (targets != null)
             {
