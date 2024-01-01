@@ -10,6 +10,7 @@ namespace Core.Models.Base.Interfaces
     {
         public int Width { get; }
         public int Height { get; }
+        public SimulationConfig Config { get; set; }
 
         public int AddEntity(ISimulationEntity entity, int? id = null);
         public ISimulationEntity GetEntity(int id);

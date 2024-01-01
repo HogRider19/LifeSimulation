@@ -52,12 +52,12 @@ namespace Core.Logics
             return true;
         }
 
-        protected static ISimulationEntity? GetNearlyTargetEntity(
+        private static ISimulationEntity? GetNearlyTargetEntity(
             ISimulationEntity entity,
             IEnumerable<ISimulationEntity> spaceEntities)
         {
             var intendedTargets = spaceEntities.Where(e => IsTargetPair(entity, e)).ToList();
-            if (intendedTargets.Count() == 0) return null;
+            if (!intendedTargets.Any()) return null;
             var visibilityRange = ((Point)entity).VisibilityRange;
             
             ISimulationEntity? target = null;
@@ -75,7 +75,7 @@ namespace Core.Logics
             return target;
         }
 
-        protected static bool IsTargetPair(ISimulationEntity e1, ISimulationEntity e2)
+        private static bool IsTargetPair(ISimulationEntity e1, ISimulationEntity e2)
         {
             if (e2.Hp <= 0)
                 return false;
@@ -102,7 +102,8 @@ namespace Core.Logics
             return false;
         }
 
-        protected static void RemoveByCondition<TKey, TValue>(Dictionary<TKey, TValue> dict, Func<KeyValuePair<TKey, TValue>, bool> condition) where TKey : notnull
+        private static void RemoveByCondition<TKey, TValue>
+            (Dictionary<TKey, TValue> dict, Func<KeyValuePair<TKey, TValue>, bool> condition) where TKey : notnull
         {
             var itemsToRemove = dict.Where(condition).ToList();
             foreach (var item in itemsToRemove)

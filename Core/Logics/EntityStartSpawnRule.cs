@@ -24,9 +24,14 @@ namespace Core.Logics
 
                 foreach (EPointType pointType in Enum.GetValues(typeof(EPointType)))
                 {
-                    space.AddEntity(new Point(
-                        Position.CreateRandom(space.Width, space.Height),
-                        rnd.NextDouble() * Math.PI * 2, pointType));
+                    var point = new Point(Position.CreateRandom(space.Width, space.Height),
+                        rnd.NextDouble() * Math.PI * 2, pointType);
+
+                    point.Hp = space.Config.DefaultPointHp;
+                    point.Velocity = space.Config.DefaultPointVelocity;
+                    point.VisibilityRange = space.Config.DefaultPointVisibilityRange;
+                    
+                    space.AddEntity(point);
                 }
                 
             }

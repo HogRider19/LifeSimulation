@@ -24,7 +24,7 @@ namespace Web.Services
             _hubContext = hubContext;
             _logger = logger;
             _spaceInfoHandler = spaceInfoHandler;
-            _manager = CreateBaseManager();
+            _manager = GetNewManager();
         }
 
         public void Start()
@@ -32,7 +32,7 @@ namespace Web.Services
             if (_managerTask != null)
                 Stop();
 
-            _manager = CreateBaseManager();
+            _manager = GetNewManager();
             _managerTask = Task.Run(() => _manager.Start());
         }
 
@@ -49,24 +49,10 @@ namespace Web.Services
             _hubContext.Clients.All.SendAsync("ReceiveSpace", json);
         }
 
-        protected SimulationManager CreateBaseManager()
+        protected SimulationManager GetNewManager()
         {
-            var space = new SimulationSpace(100, 100);
-            var state = SimulationState.Create();
-            state.ClearAll();
-            
-            var manager = new SimulationManager(space, state);
-            manager.AddRule(new EntityStartSpawnRule(30));
-            manager.AddRule(new MealSpawnRule(1000, 10));
+            var manager = SimulationManager.CreateBaseManager();
             manager.AddRule(new ReceivingSpaceRule(10, ReceivingSpaceHandler));
-            manager.AddRule(new ClosedBordersRule());
-            manager.AddRule(new HpHandlerRule(1000));
-
-            var movePointRule = new MovePointRule();
-            var findTargetRule = new FindTargetRule(2000, movePointRule);
-            manager.AddRule(findTargetRule);
-            manager.AddRule(movePointRule);
-
             return manager;
         }
 

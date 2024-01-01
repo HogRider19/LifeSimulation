@@ -16,7 +16,7 @@ namespace Core.Logics
             
             foreach (var entity in entities.Where(e => e is Point))
             {
-                ((SimulationEntity)entity).Hp -= 100;
+                ((SimulationEntity)entity).Hp -= base.Interval * space.Config.SubtractPointHpPerSecond / 1000;
             }
 
             foreach (var entity in entities)

@@ -1,4 +1,5 @@
 ﻿using Core.Logics.Base.Interfaces;
+using Core.Models.Base;
 using Core.Models.Base.Interfaces;
 
 
@@ -8,6 +9,7 @@ namespace Core.Logics.Base
     {
         public ESimulationManagerState ManagerState { get; protected set; }
         public ISimulationState SimulationState { get; protected set; }
+        public SimulationConfig Config { get; init; }
 
         private List<ISimulationRule> _rules;
         private ISimulationSpace _space;
@@ -15,12 +17,16 @@ namespace Core.Logics.Base
         public SimulationManager(
             ISimulationSpace space,
             ISimulationState simulationState,
-            List<ISimulationRule>? rules = null)
+            List<ISimulationRule>? rules = null,
+            SimulationConfig? config = null)
         {
             ManagerState = ESimulationManagerState.NotStarted;
             SimulationState = simulationState;
+            Config = config ?? new SimulationConfig();
             _rules = rules ?? new List<ISimulationRule>();
             _space = space;
+
+            _space.Config = Config;
         }
 
         public void Start(bool resetSpase = true)
@@ -88,6 +94,27 @@ namespace Core.Logics.Base
                 SpaceWidth = _space.Width,
                 SpaceHeight = _space.Height
             };
+        }
+
+        public static SimulationManager CreateBaseManager()
+        {
+            var space = new SimulationSpace(100, 100);
+            var state = Core.Logics.Base.SimulationState.Create();
+            state.ClearAll();
+            
+            var manager = new SimulationManager(space, state);
+            manager.AddRule(new EntityStartSpawnRule(30));
+            manager.AddRule(new MealSpawnRule(1000, 10));
+            manager.AddRule(new ClosedBordersRule());
+            manager.AddRule(new HpHandlerRule(1000));
+            manager.AddRule(new PointReproductionRule(500));
+
+            var movePointRule = new MovePointRule();
+            var findTargetRule = new FindTargetRule(2000, movePointRule);
+            manager.AddRule(findTargetRule);
+            manager.AddRule(movePointRule);
+
+            return manager;
         }
 
         public void Stop() => ManagerState = ESimulationManagerState.Stopped;

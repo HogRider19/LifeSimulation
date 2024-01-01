@@ -5,6 +5,7 @@ namespace Core.Models.Base
     public class SimulationSpace : ISimulationSpace
     {
         public Dictionary<int, ISimulationEntity> Entities { get; private set; } = new();
+        public SimulationConfig Config { get; set; } = new SimulationConfig();
         public int Width { get; init; }
         public int Height { get; init; }
 
