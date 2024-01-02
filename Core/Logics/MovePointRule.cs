@@ -16,7 +16,8 @@ namespace Core.Logics
         public override bool Apply(ISimulationSpace space, ISimulationState state)
         {
             var context = state.GetRuleContext(this);
-            context.TryAdd("moveTimes", new Dictionary<ISimulationEntity, long>());
+            if (!context.ContainsKey("moveTimes")) 
+                context.Add("moveTimes", new Dictionary<ISimulationEntity, long>());
             
             var targets = (Dictionary<ISimulationEntity, ISimulationEntity>?)context.GetValueOrDefault("targets");
             var moveTimes = (Dictionary<ISimulationEntity, long>)context["moveTimes"];

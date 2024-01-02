@@ -53,6 +53,7 @@ namespace Web.Services
         {
             var manager = SimulationManager.CreateBaseManager();
             manager.AddRule(new ReceivingSpaceRule(10, ReceivingSpaceHandler));
+            manager.AddRule(new PerformanceLogRule("Logs/PerformanceLog.txt", 1000));
             return manager;
         }
 
